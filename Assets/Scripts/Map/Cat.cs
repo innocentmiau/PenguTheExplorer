@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Scripts.Core;
 using UnityEngine;
 
 namespace Scripts.Map
@@ -6,11 +7,13 @@ namespace Scripts.Map
     public class Cat : MonoBehaviour
     {
 
+        [SerializeField] private int catNumber;
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private Transform fakeCenterPointTrans;
         
         public Vector3 Collected()
         {
+            GameManager.Instance.SetCatCollected(catNumber);
             StartCoroutine(FadeOutAnimation());
             return fakeCenterPointTrans.position;
         }

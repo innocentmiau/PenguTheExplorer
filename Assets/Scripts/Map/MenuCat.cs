@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Scripts.Core;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -28,6 +29,22 @@ namespace Scripts.Map
 
         private void Start()
         {
+            StartCoroutine(TryToStart());
+        }
+
+        private IEnumerator TryToStart()
+        {
+            while (true)
+            {
+                if (GameManager.Instance != null) break;
+                yield return null;
+            }
+
+            if (!GameManager.Instance.IsCatCollected(catNumber))
+            {
+                Destroy(gameObject);
+                yield break;
+            }
             StartIdle();
         }
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using Logger = Scripts.Utils.Logger;
 
 namespace Scripts.Core
@@ -20,6 +21,11 @@ namespace Scripts.Core
         private float _fadeInElapse;
         private float _fadeOutElapse;
         
+        public bool[] CatsCollected { get; private set; }
+
+        public void SetCatCollected(int numb) => CatsCollected[numb] = true;
+        public bool IsCatCollected(int numb) => CatsCollected[numb];
+        
         private void Start()
         {
             if (Instance != null)
@@ -27,6 +33,7 @@ namespace Scripts.Core
                 Destroy(gameObject);
                 return;
             }
+            CatsCollected = new bool[10];
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
@@ -39,12 +46,14 @@ namespace Scripts.Core
         {
             _musicPlaying = gameMusic;
             _fadeOutElapse = fadeOut;
+            UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(1);
         }
 
         public void ChangeToMainScene()
         {
             _musicPlaying = mainMusic;
             _fadeOutElapse = fadeOut;
+            UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
         }
 
         private void Update()
